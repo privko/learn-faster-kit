@@ -1,16 +1,17 @@
 ---
-description: Initialize a new learning topic $topic for deep conceptual understanding using the FASTER framework
+description: Initialize a new learning topic for deep conceptual understanding using the FASTER framework
 ---
 
 ## Context
 
+- Topic to learn: $ARGUMENTS
 - Current topic: !`ls .learning/ 2>/dev/null | grep -v scripts`
 
 **Note:** The `.learning/` directory is already initialized. Check the topic folder name (ignore `scripts/`).
 
 ## Your Task
 
-Initialize theory-focused learning for the specified topic using the FASTER framework.
+Initialize theory-focused learning for the topic "$ARGUMENTS" using the FASTER framework.
 
 **If a topic already exists:**
 

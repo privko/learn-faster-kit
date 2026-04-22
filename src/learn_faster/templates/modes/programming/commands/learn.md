@@ -1,16 +1,17 @@
 ---
-description: Initialize or continue learning a programming topic $topic using project-based approach
+description: Initialize or continue learning a programming topic using project-based approach
 ---
 
 ## Context
 
+- Topic to learn: $ARGUMENTS
 - Current topic: !`ls .learning/ 2>/dev/null | grep -v scripts`
 
 **Note:** The `.learning/` directory is already initialized. Check the topic folder name (ignore `scripts/`).
 
 ## Your Task
 
-Initialize learning for the specified programming topic using the FASTER framework with project-based approach.
+Initialize learning for the topic "$ARGUMENTS" using the FASTER framework with project-based approach.
 
 **If a topic already exists:**
 

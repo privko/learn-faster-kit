@@ -91,12 +91,7 @@ def create_opencode_config(project_dir: Path, learning_mode: str) -> None:
     default_config = {
         "$schema": "https://opencode.ai/config.json",
         "permission": {
-            "bash": {
-                "*": "ask",
-                "python3 .learning/scripts/*": "allow",
-                "ls*": "allow",
-                "cat .learning/*": "allow",
-            },
+            "bash": "allow",
             "edit": "allow",
         },
         "agent": {
@@ -117,14 +112,6 @@ def create_opencode_config(project_dir: Path, learning_mode: str) -> None:
         # Merge with defaults
         if "permission" not in config:
             config["permission"] = default_config["permission"]
-        else:
-            # Merge bash permissions
-            if "bash" not in config["permission"]:
-                config["permission"]["bash"] = {}
-
-            for cmd, perm in default_config["permission"]["bash"].items():
-                if cmd not in config["permission"]["bash"]:
-                    config["permission"]["bash"][cmd] = perm
 
         # Add agent config
         if "agent" not in config:

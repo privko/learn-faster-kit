@@ -155,29 +155,12 @@ When `next_action: "generate_syllabus"`:
 
 ## Teaching Prompts
 
-After learning concepts, use `AskUserQuestion` to prompt teach-back:
+After learning concepts, ask user to teach back directly:
 
-```json
-{
-    "question": "Ready to teach back what you just learned?",
-    "header": "Teach Back",
-    "multiSelect": false,
-    "options": [
-        {
-            "label": "Yes, let me explain",
-            "description": "I'll explain the concept in my own words"
-        },
-        {
-            "label": "Need review first",
-            "description": "Want to review the concept again"
-        },
-        {
-            "label": "Not sure yet",
-            "description": "Need more practice before explaining"
-        }
-    ]
-}
-```
+"Ready to teach back what you just learned? Reply with:
+- **Yes, let me explain** - I'll explain the concept in my own words
+- **Need review first** - Want to review the concept again
+- **Not sure yet** - Need more practice before explaining"
 
 If user chooses "Yes, let me explain":
 
@@ -207,7 +190,7 @@ tail -30 .learning/<topic-slug>/progress.md
 
 ## Key Principles for This System
 
--   Use `AskUserQuestion` to gather learning preferences
+-   Ask questions directly to gather learning preferences
 -   Always prompt user to teach concepts back
 
 **For User:**

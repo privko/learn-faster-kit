@@ -21,84 +21,25 @@ Initialize theory-focused learning for the topic "$ARGUMENTS" using the FASTER f
 
 **If no topic exists yet:**
 
-1. **Gather learning preferences** with `AskUserQuestion` based on users selected topic:
-   <example>
+1. **Gather learning preferences** by asking the user directly:
 
-```json
-[
-  {
-    "question": "What depth of understanding do you want?",
-    "header": "Depth",
-    "multiSelect": false,
-    "options": [
-      {
-        "label": "Foundational",
-        "description": "Core concepts and basic intuition"
-      },
-      {
-        "label": "Intermediate",
-        "description": "How and why things work internally"
-      },
-      {
-        "label": "Deep",
-        "description": "First principles and mathematical foundations"
-      },
-      {
-        "label": "Expert",
-        "description": "Research-level understanding, cutting edge"
-      }
-    ]
-  },
-  {
-    "question": "What's your learning style for concepts?",
-    "header": "Style",
-    "multiSelect": true,
-    "options": [
-      {
-        "label": "Analogies",
-        "description": "Learn through comparisons and metaphors"
-      },
-      {
-        "label": "First principles",
-        "description": "Build up from fundamental truths"
-      },
-      {
-        "label": "Visual models",
-        "description": "Diagrams and visual representations"
-      },
-      {
-        "label": "Historical context",
-        "description": "Why this was invented, evolution of ideas"
-      }
-    ]
-  },
-  {
-    "question": "What are you trying to achieve?",
-    "header": "Goal",
-    "multiSelect": false,
-    "options": [
-      {
-        "label": "Understand deeply",
-        "description": "Build robust mental models"
-      },
-      {
-        "label": "Research",
-        "description": "Foundation for further study"
-      },
-      {
-        "label": "Teach others",
-        "description": "Explain clearly to others"
-      },
-      {
-        "label": "Pure curiosity",
-        "description": "Just want to know how it works"
-      }
-    ]
-  }
-]
-```
+Ask: "What depth of understanding do you want? Reply with:
+- **Foundational** - Core concepts and basic intuition
+- **Intermediate** - How and why things work internally
+- **Deep** - First principles and mathematical foundations
+- **Expert** - Research-level understanding, cutting edge"
 
-</example>
+Ask: "What's your learning style for concepts? (select all that apply) Reply with:
+- **Analogies** - Learn through comparisons and metaphors
+- **First principles** - Build up from fundamental truths
+- **Visual models** - Diagrams and visual representations
+- **Historical context** - Why this was invented, evolution of ideas"
+
+Ask: "What are you trying to achieve? Reply with:
+- **Understand deeply** - Build robust mental models
+- **Research** - Foundation for further study
+- **Teach others** - Explain clearly to others
+- **Pure curiosity** - Just want to know how it works"
 
 2. Run: `python3 .learning/scripts/init_learning.py "[topic name]" .learning`
 3. Parse JSON output and follow `llm_directive`

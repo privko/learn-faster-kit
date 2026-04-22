@@ -21,37 +21,19 @@ Initialize learning for the topic "$ARGUMENTS" using the FASTER framework with p
 
 **If no topic exists yet:**
 
-1. **Gather learning preferences** with `AskUserQuestion` based on user's selected topic:
-   <example>
+1. **Gather learning preferences** by asking the user directly:
 
-```json
-[
-  {
-    "question": "What level do you want to achieve with [topic]?",
-    "header": "Level",
-    "multiSelect": false,
-    "options": [
-      {"label": "Beginner", "description": "Fundamentals and basic syntax"},
-      {"label": "Intermediate", "description": "Common patterns and projects"},
-      {"label": "Advanced", "description": "Architecture and optimization"},
-      {"label": "Expert", "description": "Deep internals and best practices"}
-    ]
-  },
-  {
-    "question": "What's your learning goal?",
-    "header": "Goal",
-    "multiSelect": true,
-    "options": [
-      {"label": "Build projects", "description": "Learn by building real applications"},
-      {"label": "Understand deeply", "description": "How things work under the hood"},
-      {"label": "Best practices", "description": "Production-ready code patterns"},
-      {"label": "Interview prep", "description": "Problem-solving and algorithms"}
-    ]
-  }
-]
-```
+Ask: "What level do you want to achieve with [topic]? Reply with:
+- **Beginner** - Fundamentals and basic syntax
+- **Intermediate** - Common patterns and projects
+- **Advanced** - Architecture and optimization
+- **Expert** - Deep internals and best practices"
 
-</example>
+Ask: "What's your learning goal? (select all that apply) Reply with:
+- **Build projects** - Learn by building real applications
+- **Understand deeply** - How things work under the hood
+- **Best practices** - Production-ready code patterns
+- **Interview prep** - Problem-solving and algorithms"
 
 2. Run: `python3 .learning/scripts/init_learning.py "[topic name]" .learning`
 3. Parse JSON output and follow `llm_directive`

@@ -21,61 +21,19 @@ Initialize learning for the topic "$ARGUMENTS" using the FASTER framework.
 
 **If no topic exists yet:**
 
-1. **Gather learning preferences** with `AskUserQuestion` base on users selected topic:
-   <example>
+1. **Gather learning preferences** by asking the user directly:
 
-```json
-[
-  {
-    "question": "What level do you want to achieve with [topic]?",
-    "header": "Level",
-    "multiSelect": false,
-    "options": [
-      {
-        "label": "Beginner",
-        "description": "Fundamentals and basic concepts"
-      },
-      {
-        "label": "Intermediate",
-        "description": "Practical skills and common patterns"
-      },
-      {
-        "label": "Advanced",
-        "description": "Deep expertise and edge cases"
-      },
-      {
-        "label": "Expert",
-        "description": "Mastery level, architecture, optimization"
-      }
-    ]
-  },
-  {
-    "question": "What do you want to focus on?",
-    "header": "Focus",
-    "multiSelect": true,
-    "options": [
-      {
-        "label": "Theory",
-        "description": "Concepts, principles, how things work"
-      },
-      {
-        "label": "Practice",
-        "description": "Hands-on coding and building projects"
-      },
-      {
-        "label": "Real-world",
-        "description": "Production patterns and best practices"
-      },
-      {
-        "label": "Interview prep",
-        "description": "Common questions and problem-solving"
-      }
-    ]
-  }
-]
-```
+Ask: "What level do you want to achieve with [topic]? Reply with:
+- **Beginner** - Fundamentals and basic concepts
+- **Intermediate** - Practical skills and common patterns
+- **Advanced** - Deep expertise and edge cases
+- **Expert** - Mastery level, architecture, optimization"
 
-</example>
+Ask: "What do you want to focus on? (select all that apply) Reply with:
+- **Theory** - Concepts, principles, how things work
+- **Practice** - Hands-on coding and building projects
+- **Real-world** - Production patterns and best practices
+- **Interview prep** - Common questions and problem-solving"
 
 2. Run: `python3 .learning/scripts/init_learning.py "[topic name]" .learning`
 3. Parse JSON output and follow `llm_directive`

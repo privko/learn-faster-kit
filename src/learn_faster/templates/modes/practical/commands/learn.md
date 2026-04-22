@@ -21,84 +21,25 @@ Initialize project-based learning for the topic "$ARGUMENTS" using the FASTER fr
 
 **If no topic exists yet:**
 
-1. **Gather project preferences** with `AskUserQuestion` based on users selected topic:
-   <example>
+1. **Gather project preferences** by asking the user directly:
 
-```json
-[
-  {
-    "question": "What kind of projects do you want to build?",
-    "header": "Projects",
-    "multiSelect": true,
-    "options": [
-      {
-        "label": "Quick demos",
-        "description": "Small examples to try concepts (30 min)"
-      },
-      {
-        "label": "Useful tools",
-        "description": "Things you'll actually use (2-3 hours)"
-      },
-      {
-        "label": "Portfolio pieces",
-        "description": "Projects to showcase skills"
-      },
-      {
-        "label": "Solve my problems",
-        "description": "Build solutions to real issues I have"
-      }
-    ]
-  },
-  {
-    "question": "How do you learn best by doing?",
-    "header": "Style",
-    "multiSelect": false,
-    "options": [
-      {
-        "label": "Follow then build",
-        "description": "See example, then build my own"
-      },
-      {
-        "label": "Build from scratch",
-        "description": "Figure it out as I go"
-      },
-      {
-        "label": "Fix/extend code",
-        "description": "Start with working code, modify it"
-      },
-      {
-        "label": "Copy-paste-understand",
-        "description": "Get it working, then understand how"
-      }
-    ]
-  },
-  {
-    "question": "How much time per session?",
-    "header": "Time",
-    "multiSelect": false,
-    "options": [
-      {
-        "label": "30 min",
-        "description": "Quick focused builds"
-      },
-      {
-        "label": "1-2 hours",
-        "description": "Complete small projects"
-      },
-      {
-        "label": "Half day",
-        "description": "Deep project sessions"
-      },
-      {
-        "label": "Flexible",
-        "description": "Depends on the day"
-      }
-    ]
-  }
-]
-```
+Ask: "What kind of projects do you want to build? (select all that apply) Reply with:
+- **Quick demos** - Small examples to try concepts (30 min)
+- **Useful tools** - Things you'll actually use (2-3 hours)
+- **Portfolio pieces** - Projects to showcase skills
+- **Solve my problems** - Build solutions to real issues I have"
 
-</example>
+Ask: "How do you learn best by doing? Reply with:
+- **Follow then build** - See example, then build my own
+- **Build from scratch** - Figure it out as I go
+- **Fix/extend code** - Start with working code, modify it
+- **Copy-paste-understand** - Get it working, then understand how"
+
+Ask: "How much time per session? Reply with:
+- **30 min** - Quick focused builds
+- **1-2 hours** - Complete small projects
+- **Half day** - Deep project sessions
+- **Flexible** - Depends on the day"
 
 2. Run: `python3 .learning/scripts/init_learning.py "[topic name]" .learning`
 3. Parse JSON output and follow `llm_directive`

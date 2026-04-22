@@ -37,29 +37,12 @@ For each concept in review list:
 
 - Celebrate: "Great job! Reviewed N concepts! 🎉"
 - Show next review date
-- Use `AskUserQuestion` for next action:
+- Ask for next action:
 
-```json
-{
-  "question": "What would you like to do next?",
-  "header": "Next",
-  "multiSelect": false,
-  "options": [
-    {
-      "label": "Learn new",
-      "description": "Continue with next syllabus item"
-    },
-    {
-      "label": "Practice",
-      "description": "Work on hands-on exercises"
-    },
-    {
-      "label": "Take break",
-      "description": "Come back later"
-    }
-  ]
-}
-```
+Ask: "What would you like to do next? Reply with:
+- **Learn new** - Continue with next syllabus item
+- **Practice** - Work on hands-on exercises
+- **Take break** - Come back later"
 
 **If no reviews due:**
 

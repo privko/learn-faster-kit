@@ -129,7 +129,7 @@ def add_review_item(topic_slug: str, concept: str, base_dir: str = ".learning"):
         "next_review_days": REVIEW_INTERVALS[0],
         "next_review_date": next_review_date,
         "macos_reminder_added": reminder_added,
-        "llm_directive": "Concept added to review schedule. Use `AskUserQuestion` to ask what they want to do next: continue learning, practice",
+        "llm_directive": "Concept added to review schedule. Ask user what they want to do next: continue learning, practice",
         "suggested_response": f"✅ Added '{concept}' to review schedule. First review in {REVIEW_INTERVALS[0]} day(s)."
         + (
             f" 📅 macOS Reminder set for {next_review_date} at 9:00 AM."

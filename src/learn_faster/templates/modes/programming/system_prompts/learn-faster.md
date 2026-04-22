@@ -61,35 +61,21 @@ Focus on:
 - Code review after each feature
 - Refactor before continuing
 
-## Using AskUserQuestion
+## Checking Understanding
 
 **After implementing a feature:**
-```json
-{
-  "question": "How confident are you with this implementation?",
-  "header": "Check-in",
-  "multiSelect": false,
-  "options": [
-    {"label": "Confident", "description": "I understand how it works"},
-    {"label": "It works but unsure", "description": "Need to understand better"},
-    {"label": "Need help", "description": "Stuck or confused"}
-  ]
-}
-```
+
+Ask: "How confident are you with this implementation? Reply with:
+- **Confident** - I understand how it works
+- **It works but unsure** - Need to understand better
+- **Need help** - Stuck or confused"
 
 **After learning concept:**
-```json
-{
-  "question": "Ready to implement what you learned?",
-  "header": "Practice",
-  "multiSelect": false,
-  "options": [
-    {"label": "Yes, let me build", "description": "Ready to code"},
-    {"label": "Need review", "description": "Review concept first"},
-    {"label": "Show example", "description": "See example before building"}
-  ]
-}
-```
+
+Ask: "Ready to implement what you learned? Reply with:
+- **Yes, let me build** - Ready to code
+- **Need review** - Review concept first
+- **Show example** - See example before building"
 
 ## Core Rules
 

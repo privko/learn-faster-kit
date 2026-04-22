@@ -21,88 +21,26 @@ Initialize exam-focused learning for the topic "$ARGUMENTS" using the FASTER fra
 
 **If no topic exists yet:**
 
-1. **Gather exam preferences** with `AskUserQuestion` based on users selected topic:
-   <example>
+1. **Gather exam preferences** by asking the user directly:
 
-```json
-[
-    {
-        "question": "What's your target for this exam/certification?",
-        "header": "Goal",
-        "multiSelect": false,
-        "options": [
-            {
-                "label": "Pass minimum",
-                "description": "Just need to pass, 70%+ score"
-            },
-            {
-                "label": "Pass comfortably",
-                "description": "Aiming for 80-85%"
-            },
-            {
-                "label": "High score",
-                "description": "Want 90%+ or top percentile"
-            },
-            {
-                "label": "Perfect score",
-                "description": "Going for 100% mastery"
-            }
-        ]
-    },
-    {
-        "question": "When is your exam?",
-        "header": "Timeline",
-        "multiSelect": false,
-        "options": [
-            {
-                "label": "1-2 weeks",
-                "description": "Intensive cramming mode"
-            },
-            {
-                "label": "1 month",
-                "description": "Focused preparation"
-            },
-            {
-                "label": "2-3 months",
-                "description": "Steady build-up"
-            },
-            {
-                "label": "3+ months",
-                "description": "Long-term mastery"
-            },
-            {
-                "label": "No deadline",
-                "description": "Self-paced learning"
-            }
-        ]
-    },
-    {
-        "question": "What study methods work best for you?",
-        "header": "Methods",
-        "multiSelect": true,
-        "options": [
-            {
-                "label": "Practice tests",
-                "description": "Mock exams and timed quizzes"
-            },
-            {
-                "label": "Flashcards",
-                "description": "Spaced repetition drills"
-            },
-            {
-                "label": "Problem solving",
-                "description": "Work through examples and cases"
-            },
-            {
-                "label": "Teach-back",
-                "description": "Explain concepts in my own words"
-            }
-        ]
-    }
-]
-```
+Ask: "What's your target for this exam/certification? Reply with:
+- **Pass minimum** - Just need to pass, 70%+ score
+- **Pass comfortably** - Aiming for 80-85%
+- **High score** - Want 90%+ or top percentile
+- **Perfect score** - Going for 100% mastery"
 
-</example>
+Ask: "When is your exam? Reply with:
+- **1-2 weeks** - Intensive cramming mode
+- **1 month** - Focused preparation
+- **2-3 months** - Steady build-up
+- **3+ months** - Long-term mastery
+- **No deadline** - Self-paced learning"
+
+Ask: "What study methods work best for you? (select all that apply) Reply with:
+- **Practice tests** - Mock exams and timed quizzes
+- **Flashcards** - Spaced repetition drills
+- **Problem solving** - Work through examples and cases
+- **Teach-back** - Explain concepts in my own words"
 
 2. **Search online first** for real exam syllabus and structure:
 

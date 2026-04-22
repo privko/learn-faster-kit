@@ -141,7 +141,7 @@ When user completes quizzes or practice tests:
         },
         {
             "label": "No, practice here",
-            "description": "Continue with interactive quizzes in Claude Code"
+            "description": "Continue with interactive quizzes in OpenCode"
         }
     ]
 }

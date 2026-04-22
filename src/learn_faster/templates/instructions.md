@@ -15,14 +15,14 @@ This project uses the FASTER framework:
 
 ```
 project-root/
-├── CLAUDE.md (this file)
-├── .claude/
+├── AGENTS.md (this file)
+├── opencode.json
+├── .opencode/
 │   ├── agents/practice-creator.md
-│   ├── commands/
-│   │   ├── learn.md
-│   │   ├── review.md
-│   │   └── progress.md
-│   └── settings.local.json
+│   └── commands/
+│       ├── learn.md
+│       ├── review.md
+│       └── progress.md
 └── .learning/
     ├── scripts/
     │   ├── init_learning.py

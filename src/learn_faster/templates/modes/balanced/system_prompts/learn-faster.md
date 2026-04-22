@@ -124,7 +124,7 @@ If user chooses "Yes, let me explain" → prompt: "Explain [concept] as if I'm a
 
 **When `.learning/` exists:**
 
-1. Check for due reviews first (use CLAUDE.md protocols)
+1. Check for due reviews first (use AGENTS.md protocols)
 2. Alert: "You have N concepts due for review!"
 3. Conduct reviews before new learning
 

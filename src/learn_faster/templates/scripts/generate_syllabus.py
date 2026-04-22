@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generate a structured learning syllabus for a topic.
-This is a helper that Claude will use to create comprehensive learning paths.
+This is a helper that the AI will use to create comprehensive learning paths.
 """
 
 import json
@@ -9,7 +9,9 @@ from pathlib import Path
 from datetime import datetime
 
 
-def update_syllabus(topic_slug: str, syllabus_content: str, base_dir: str = ".learning"):
+def update_syllabus(
+    topic_slug: str, syllabus_content: str, base_dir: str = ".learning"
+):
     """
     Update the syllabus file with generated content.
 
@@ -70,7 +72,7 @@ def get_topic_info(topic_slug: str, base_dir: str = ".learning"):
         "status": metadata["status"],
         "sessions": metadata["total_sessions"],
         "syllabus_exists": metadata.get("syllabus_generated", False),
-        "directory": str(topic_dir)
+        "directory": str(topic_dir),
     }
 
 
@@ -117,7 +119,7 @@ if __name__ == "__main__":
                 "status": "no_topics",
                 "topics": [],
                 "llm_directive": "No learning topics found. Ask user what they'd like to learn and initialize a new topic.",
-                "suggested_response": "No learning topics found yet. What would you like to learn?"
+                "suggested_response": "No learning topics found yet. What would you like to learn?",
             }
             print(json.dumps(output, indent=2))
         else:
@@ -126,10 +128,14 @@ if __name__ == "__main__":
                 "topic_count": len(topics),
                 "topics": topics,
                 "llm_directive": "Show user the list of topics. Ask which one they'd like to work on or if they want to start a new one.",
-                "suggested_response": f"You have {len(topics)} learning topic(s):\n\n" + "\n".join([
-                    f"{'✅' if t['status'] == 'completed' else '📖'} {t['topic']} - {t['sessions']} sessions"
-                    for t in topics
-                ]) + "\n\nWhich topic would you like to work on?"
+                "suggested_response": f"You have {len(topics)} learning topic(s):\n\n"
+                + "\n".join(
+                    [
+                        f"{'✅' if t['status'] == 'completed' else '📖'} {t['topic']} - {t['sessions']} sessions"
+                        for t in topics
+                    ]
+                )
+                + "\n\nWhich topic would you like to work on?",
             }
             print(json.dumps(output, indent=2))
 
@@ -140,13 +146,13 @@ if __name__ == "__main__":
                 "status": "success",
                 "topic_info": info,
                 "llm_directive": "Display topic information to user. Check if reviews are due for this topic.",
-                "suggested_response": f"Topic: {info['topic']}\nSessions: {info['sessions']}\nStatus: {info['status']}"
+                "suggested_response": f"Topic: {info['topic']}\nSessions: {info['sessions']}\nStatus: {info['status']}",
             }
             print(json.dumps(output, indent=2))
         else:
             output = {
                 "status": "error",
                 "error": f"Topic '{sys.argv[2]}' not found",
-                "llm_directive": "Inform user topic not found. Suggest listing all topics or creating new one."
+                "llm_directive": "Inform user topic not found. Suggest listing all topics or creating new one.",
             }
             print(json.dumps(output, indent=2))

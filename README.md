@@ -6,7 +6,7 @@
 
 > AI-powered learning coach that accelerates mastery through spaced repetition, personalized syllabi, and active practice.
 
-**Built for [Claude Code](https://claude.com/claude-code)** - Integrates AI coaching directly into your development environment.
+**Built for [OpenCode](https://opencode.ai)** - Integrates AI coaching directly into your development environment.
 
 ## Why Learn FASTER?
 
@@ -50,7 +50,7 @@ Then in any project directory, simply run:
 learn-faster
 ```
 
-This will auto-initialize on first run and launch Claude Code with FASTER coaching mode.
+This will auto-initialize on first run and launch OpenCode with FASTER coaching mode.
 
 ### Option 2: One-Time Use
 
@@ -66,13 +66,14 @@ On first run, learn-faster creates:
 
 ```
 your-project/
-├── .claude/
+├── AGENTS.md
+├── opencode.json
+├── .opencode/
 │   ├── agents/practice-creator.md
-│   ├── commands/
-│   │   ├── learn.md
-│   │   ├── review.md
-│   │   └── progress.md
-│   └── settings.local.json
+│   └── commands/
+│       ├── learn.md
+│       ├── review.md
+│       └── progress.md
 ├── .learning/
 │   ├── config.json (tracks initialization)
 │   ├── scripts/
@@ -81,7 +82,6 @@ your-project/
 │   │   ├── review_scheduler.py
 │   │   └── generate_syllabus.py
 │   └── references/faster_framework.md
-└── CLAUDE.md
 ```
 
 ## Quick Start
@@ -103,7 +103,7 @@ your-project/
 
     - Prompt you to select a learning mode
     - Initialize the project structure
-    - Launch Claude Code with FASTER coaching enabled
+    - Launch OpenCode with FASTER coaching enabled
 
 3. **Start learning**
 
@@ -120,7 +120,7 @@ The "T" in FASTER—teaching to retain—is the key differentiator. Here's how i
 ```bash
 mkdir learn-go && cd learn-go
 learn-faster                    # Select "Balanced" mode
-/learn "Go error handling"      # In Claude Code
+/learn "Go error handling"      # In OpenCode
 ```
 
 ```
@@ -146,13 +146,13 @@ Coach: ✅ Great explanation! You nailed the key insight—wrapped errors
 
 ### CLI Commands
 
--   `learn-faster` - Launch Claude Code with FASTER coaching (auto-initializes on first run)
+-   `learn-faster` - Launch OpenCode with FASTER coaching (auto-initializes on first run)
 -   `learn-faster init` - Force re-initialization or switch learning modes
 -   `learn-faster version` - Show current version
 
-### Claude Code Slash Commands
+### OpenCode Slash Commands
 
-Once Claude Code is running, use these commands:
+Once OpenCode is running, use these commands:
 
 -   `/learn [topic]` - Start or continue learning a topic with personalized syllabus
 -   `/review` - Spaced repetition review session for topics you've learned
@@ -198,7 +198,7 @@ Learn FASTER is ideal for:
 ## Requirements
 
 -   Python 3.12+
--   [Claude Code](https://claude.com/claude-code)
+-   [OpenCode](https://opencode.ai)
 -   [uv](https://docs.astral.sh/uv/) package manager
 
 ## Contributing

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Learn FASTER CLI - One-time installer for Claude Code learning system.
+Learn FASTER CLI - One-time installer for OpenCode learning system.
 
 Usage:
     uvx learn-faster init
@@ -77,73 +77,72 @@ def get_templates_dir() -> Path:
     return Path(__file__).parent.parent / "templates"
 
 
-def create_or_update_settings(claude_dir: Path) -> None:
-    """Create or update .claude/settings.local.json."""
-    settings_file = claude_dir / "settings.local.json"
+def create_opencode_config(project_dir: Path, learning_mode: str) -> None:
+    """Create or update opencode.json with Learn FASTER configuration."""
+    config_file = project_dir / "opencode.json"
 
-    # Default settings for Learn FASTER
-    default_settings = {
-        "permissions": {
-            "allow": [
-                "Bash(python3 .learning/scripts/:*)",
-                "Bash(ls:*)",
-                "Read(.learning/**)",
-                "Write(.learning/**)",
-                "Write(**/*.md)",
-                "Read(**/*.md)"
-            ],
-            "deny": [
-                "Bash(rm:*)",
-                "Bash(curl:*)",
-                "Read(.env)",
-                "Read(.env.*)",
-                "Write(.env)",
-                "Write(.env.*)"
-            ]
+    # Get the path to the system prompt template
+    templates_dir = get_templates_dir()
+    system_prompt_path = (
+        templates_dir / "modes" / learning_mode / "system_prompts" / "learn-faster.md"
+    )
+
+    # Default config for Learn FASTER
+    default_config = {
+        "$schema": "https://opencode.ai/config.json",
+        "permission": {
+            "bash": {
+                "*": "ask",
+                "python3 .learning/scripts/*": "allow",
+                "ls*": "allow",
+                "cat .learning/*": "allow",
+            },
+            "edit": "allow",
         },
-        "companyAnnouncements": [
-            "🚀 Learn FASTER is active! Use /learn \"Topic\" to start learning",
-        ]
+        "agent": {
+            "learn-faster": {
+                "description": "Learning coach using the FASTER framework",
+                "mode": "primary",
+                "prompt": f"{{file:{system_prompt_path}}}",
+            }
+        },
+        "default_agent": "learn-faster",
     }
 
-    if settings_file.exists():
-        # Load existing settings
-        with open(settings_file, "r") as f:
-            settings = json.load(f)
+    if config_file.exists():
+        # Load existing config
+        with open(config_file, "r") as f:
+            config = json.load(f)
 
         # Merge with defaults
-        if "permissions" not in settings:
-            settings["permissions"] = default_settings["permissions"]
+        if "permission" not in config:
+            config["permission"] = default_config["permission"]
         else:
-            # Merge permissions allow list
-            if "allow" not in settings["permissions"]:
-                settings["permissions"]["allow"] = []
+            # Merge bash permissions
+            if "bash" not in config["permission"]:
+                config["permission"]["bash"] = {}
 
-            for perm in default_settings["permissions"]["allow"]:
-                if perm not in settings["permissions"]["allow"]:
-                    settings["permissions"]["allow"].append(perm)
+            for cmd, perm in default_config["permission"]["bash"].items():
+                if cmd not in config["permission"]["bash"]:
+                    config["permission"]["bash"][cmd] = perm
 
-            # Merge permissions deny list
-            if "deny" not in settings["permissions"]:
-                settings["permissions"]["deny"] = []
+        # Add agent config
+        if "agent" not in config:
+            config["agent"] = {}
+        config["agent"]["learn-faster"] = default_config["agent"]["learn-faster"]
 
-            for perm in default_settings["permissions"]["deny"]:
-                if perm not in settings["permissions"]["deny"]:
-                    settings["permissions"]["deny"].append(perm)
+        # Set default agent
+        config["default_agent"] = "learn-faster"
 
-        # Add company announcements if not present
-        if "companyAnnouncements" not in settings:
-            settings["companyAnnouncements"] = default_settings["companyAnnouncements"]
-
-        print_success(f"Updated {settings_file}")
+        print_success(f"Updated {config_file}")
     else:
-        # Create new settings file
-        settings = default_settings
-        print_success(f"Created {settings_file}")
+        # Create new config file
+        config = default_config
+        print_success(f"Created {config_file}")
 
-    # Write settings
-    with open(settings_file, "w") as f:
-        json.dump(settings, f, indent=2)
+    # Write config
+    with open(config_file, "w") as f:
+        json.dump(config, f, indent=2)
 
 
 def check_initialization() -> bool:
@@ -162,7 +161,6 @@ def check_initialization() -> bool:
 
 def init_project() -> None:
     """Initialize Learn FASTER in the current project."""
-    
 
     cwd = Path.cwd()
     templates_dir = get_templates_dir()
@@ -171,50 +169,70 @@ def init_project() -> None:
     print_header("\nInitializing Learn FASTER in current project...\n")
 
     # Ask for learning mode selection
-    
 
     learning_mode_question = [
         inquirer.List(
-            'mode',
+            "mode",
             message="Choose your learning mode",
             choices=[
-                ('Balanced         - Mix of theory, practice, and application', 'balanced'),
-                ('Exam-Oriented   - Printable exam papers, practice tests, and certification prep', 'exam'),
-                ('Theory-Focused   - Deep conceptual understanding and mental models', 'theory'),
-                ('Practical        - Build projects immediately, learn by doing', 'practical'),
-                ('Programming      - Learn programming through building projects', 'programming'),
+                (
+                    "Balanced         - Mix of theory, practice, and application",
+                    "balanced",
+                ),
+                (
+                    "Exam-Oriented   - Printable exam papers, practice tests, and certification prep",
+                    "exam",
+                ),
+                (
+                    "Theory-Focused   - Deep conceptual understanding and mental models",
+                    "theory",
+                ),
+                (
+                    "Practical        - Build projects immediately, learn by doing",
+                    "practical",
+                ),
+                (
+                    "Programming      - Learn programming through building projects",
+                    "programming",
+                ),
             ],
-            default='balanced',
+            default="balanced",
         ),
     ]
 
     mode_answer = inquirer.prompt(learning_mode_question)
-    learning_mode = mode_answer['mode'] if mode_answer else 'balanced'
+    learning_mode = mode_answer["mode"] if mode_answer else "balanced"
 
     mode_names = {
         "exam": "Exam-Oriented",
         "theory": "Theory-Focused",
         "practical": "Practical",
         "balanced": "Balanced",
-        "programming": "Programming"
+        "programming": "Programming",
     }
     print_success(f"Selected: {mode_names[learning_mode]} mode\n")
 
     # Ask about macOS Reminders (only on macOS)
     macos_reminders = False
     if platform.system() == "Darwin":
-        response = input(f"{Colors.CYAN}Enable macOS Reminders for review notifications? (y/n):{Colors.RESET} ").strip().lower()
-        macos_reminders = response in ['y', 'yes']
+        response = (
+            input(
+                f"{Colors.CYAN}Enable macOS Reminders for review notifications? (y/n):{Colors.RESET} "
+            )
+            .strip()
+            .lower()
+        )
+        macos_reminders = response in ["y", "yes"]
 
-    # Create .claude directory structure
-    claude_dir = cwd / ".claude"
-    claude_dir.mkdir(exist_ok=True)
+    # Create .opencode directory structure
+    opencode_dir = cwd / ".opencode"
+    opencode_dir.mkdir(exist_ok=True)
 
     # Copy mode-specific agents and commands
     mode_templates_dir = templates_dir / "modes" / learning_mode
 
     # Copy agents for selected mode
-    agents_dest = claude_dir / "agents"
+    agents_dest = opencode_dir / "agents"
     agents_dest.mkdir(exist_ok=True)
     agents_src = mode_templates_dir / "agents"
 
@@ -224,7 +242,7 @@ def init_project() -> None:
             print_success(f"Copied agent: {file.name}")
 
     # Copy commands for selected mode
-    commands_dest = claude_dir / "commands"
+    commands_dest = opencode_dir / "commands"
     commands_dest.mkdir(exist_ok=True)
     commands_src = mode_templates_dir / "commands"
 
@@ -233,8 +251,8 @@ def init_project() -> None:
             shutil.copy2(file, commands_dest / file.name)
             print_success(f"Copied command: {file.name}")
 
-    # Create/update settings.local.json
-    create_or_update_settings(claude_dir)
+    # Create/update opencode.json
+    create_opencode_config(cwd, learning_mode)
 
     # Create .learning directory structure
     learning_dir = cwd / ".learning"
@@ -244,12 +262,14 @@ def init_project() -> None:
     config = {
         "initialized": True,
         "learning_mode": learning_mode,
-        "macos_reminders_enabled": macos_reminders
+        "macos_reminders_enabled": macos_reminders,
     }
     config_path = learning_dir / "config.json"
     with open(config_path, "w") as f:
         json.dump(config, f, indent=2)
-    print_success(f"Created config.json (Mode: {mode_names[learning_mode]}, macOS Reminders: {'enabled' if macos_reminders else 'disabled'})")
+    print_success(
+        f"Created config.json (Mode: {mode_names[learning_mode]}, macOS Reminders: {'enabled' if macos_reminders else 'disabled'})"
+    )
 
     # Copy scripts
     scripts_dest = learning_dir / "scripts"
@@ -269,26 +289,32 @@ def init_project() -> None:
             shutil.copy2(file, references_dest / file.name)
             print_success(f"Copied reference: {file.name}")
 
-    # Copy instructions.md to project root as CLAUDE.md
+    # Copy instructions.md to project root as AGENTS.md
     instructions_src = templates_dir / "instructions.md"
-    claude_md_dest = cwd / "CLAUDE.md"
-    if instructions_src.exists() and not claude_md_dest.exists():
-        shutil.copy2(instructions_src, claude_md_dest)
-        print_success("Copied instructions to CLAUDE.md in project root")
-    elif claude_md_dest.exists():
-        print_warning("CLAUDE.md already exists, skipping")
+    agents_md_dest = cwd / "AGENTS.md"
+    if instructions_src.exists() and not agents_md_dest.exists():
+        shutil.copy2(instructions_src, agents_md_dest)
+        print_success("Copied instructions to AGENTS.md in project root")
+    elif agents_md_dest.exists():
+        print_warning("AGENTS.md already exists, skipping")
 
     print(f"\n{Colors.GREEN}{Colors.BOLD}Initialization complete!{Colors.RESET}\n")
 
-    print_header("Available commands in Claude Code:")
-    print(f"  {Colors.CYAN}/learn [topic]{Colors.RESET}    - Initialize or continue learning")
-    print(f"  {Colors.CYAN}/review{Colors.RESET}           - Spaced repetition review session")
-    print(f"  {Colors.CYAN}/progress{Colors.RESET}         - Show detailed progress report")
+    print_header("Available commands in OpenCode:")
+    print(
+        f"  {Colors.CYAN}/learn [topic]{Colors.RESET}    - Initialize or continue learning"
+    )
+    print(
+        f"  {Colors.CYAN}/review{Colors.RESET}           - Spaced repetition review session"
+    )
+    print(
+        f"  {Colors.CYAN}/progress{Colors.RESET}         - Show detailed progress report"
+    )
     print()
 
 
 def launch_coach(auto_review: bool = False) -> None:
-    """Launch Claude Code with learn-faster system prompt."""
+    """Launch OpenCode with learn-faster agent configuration."""
     import subprocess
 
     # Get the learning mode from config
@@ -302,50 +328,28 @@ def launch_coach(auto_review: bool = False) -> None:
         except:
             pass
 
-    # Get the path to the system prompt template
-    templates_dir = Path(__file__).parent.parent / "templates"
-    system_prompt_path = templates_dir / "modes" / learning_mode / "system_prompts" / "learn-faster.md"
-
-    if not system_prompt_path.exists():
-        print_error(f"Error: System prompt for '{learning_mode}' mode not found")
-        print_dim(f"Expected at: {system_prompt_path}")
+    # Verify opencode.json exists with agent config
+    opencode_config = Path.cwd() / "opencode.json"
+    if not opencode_config.exists():
+        print_error("Error: opencode.json not found")
+        print_dim("Run 'learn-faster init' to initialize the project")
         sys.exit(1)
 
-    # Read the system prompt content (skip frontmatter)
-    with open(system_prompt_path, "r", encoding="utf-8") as f:
-        lines = f.readlines()
+    # Launch OpenCode
+    print_info("Launching OpenCode in learning coach mode...")
+    print_dim("(Using FASTER framework agent)\n")
 
-    # Skip frontmatter (between --- lines)
-    in_frontmatter = False
-    content_lines = []
-    for line in lines:
-        if line.strip() == "---":
-            if not in_frontmatter:
-                in_frontmatter = True
-                continue
-            else:
-                in_frontmatter = False
-                continue
-        if not in_frontmatter:
-            content_lines.append(line)
-
-    system_prompt = "".join(content_lines).strip()
-
-    # Launch Claude Code with the system prompt
-    print_info("Launching Claude Code in learning coach mode...")
-    print_dim("(Using FASTER framework system prompt)\n")
-
-    # Build command with optional /review prefix
-    cmd = ["claude", "--system-prompt", system_prompt]
+    # Build command
+    cmd = ["opencode"]
     if auto_review:
-        cmd.extend(["/review"])
+        cmd.extend(["run", "/review"])
 
     try:
         subprocess.run(cmd, check=False)
     except FileNotFoundError:
-        print_error("Error: 'claude' command not found")
-        print_dim("Make sure Claude Code CLI is installed and in your PATH")
-        print_dim("Install from: https://claude.ai/download")
+        print_error("Error: 'opencode' command not found")
+        print_dim("Make sure OpenCode CLI is installed and in your PATH")
+        print_dim("Install from: https://opencode.ai/docs/#install")
         sys.exit(1)
 
 
@@ -360,12 +364,15 @@ def main() -> None:
             return
         elif command == "version":
             from learn_faster import __version__
+
             print(f"learn-faster version {__version__}")
             return
         elif command in ["help", "--help", "-h"]:
             print("Learn FASTER - Accelerate learning with FASTER framework\n")
             print("Usage:")
-            print("  learn-faster           Auto-init and launch Claude Code in coach mode")
+            print(
+                "  learn-faster           Auto-init and launch OpenCode in coach mode"
+            )
             print("  learn-faster init      Force re-initialization")
             print("  learn-faster version   Show version")
             print()
@@ -382,11 +389,11 @@ def main() -> None:
         print()
         init_project()
         print()
-        print_header("Launching Claude Code with FASTER framework...")
+        print_header("Launching OpenCode with FASTER framework...")
         print()
         launch_coach(auto_review=False)
     else:
-        print_info("Launching Claude Code in learning coach mode...")
+        print_info("Launching OpenCode in learning coach mode...")
         print_dim("(Starting with /review to check for due reviews)\n")
         launch_coach(auto_review=True)
 

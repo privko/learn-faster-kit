@@ -1,8 +1,11 @@
 ---
-name: practice-creator
 description: Creates project structures and coding exercises for programming practice
-tools: Read, Write, Edit
-model: sonnet
+mode: subagent
+tools:
+  read: true
+  write: true
+  edit: true
+  bash: false
 ---
 
 # Practice Creator - Programming Projects

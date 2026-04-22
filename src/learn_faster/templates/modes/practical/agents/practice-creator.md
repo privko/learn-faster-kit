@@ -1,8 +1,11 @@
 ---
-name: practice-creator
 description: Creates hands-on practice exercises for practical learning
-tools: Read, Write, Edit
-model: sonnet
+mode: subagent
+tools:
+  read: true
+  write: true
+  edit: true
+  bash: false
 ---
 
 # Practice Creator

@@ -1,8 +1,14 @@
 ---
-name: exam-generator
 description: Generates printable exam papers with answer keys in PDF format. Searches for real exam examples online. Triggered by "/generate-exam" command.
-tools: Read, Write, Edit, Bash, Glob, Grep, WebSearch, WebFetch
-model: sonnet
+mode: subagent
+tools:
+  read: true
+  write: true
+  edit: true
+  bash: true
+  glob: true
+  grep: true
+  webfetch: true
 ---
 
 # Exam Generator - Printable Exam Paper Creator

@@ -14,7 +14,7 @@ Master any technical skill with science-backed learning principles:
 
 -   **Personalized syllabi** generated for your skill level and learning goals
 -   **Spaced repetition** system that schedules reviews at optimal intervals
--   **Four learning modes** - choose Balanced, Exam-Prep, Theory-Focused, or Practical
+-   **Five learning modes** - choose Balanced, Exam-Prep, Theory-Focused, Practical, or Programming
 -   **Active practice** with auto-generated exercises and projects
 -   **Progress tracking** to visualize your learning journey
 
@@ -41,7 +41,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 Install once and use across all projects:
 
 ```bash
-uv tool install learn-faster --from git+https://github.com/cheukyin175/learn-faster-kit.git
+uv tool install learn-faster --from git+https://github.com/privko/learn-faster-kit.git
 ```
 
 Then in any project directory, simply run:
@@ -57,7 +57,7 @@ This will auto-initialize on first run and launch OpenCode with FASTER coaching 
 Run directly without installation:
 
 ```bash
-uvx --from git+https://github.com/cheukyin175/learn-faster-kit.git learn-faster
+uvx --from git+https://github.com/privko/learn-faster-kit.git learn-faster
 ```
 
 ### What Gets Installed
@@ -89,7 +89,7 @@ your-project/
 1. **Install the tool**
 
     ```bash
-    uv tool install learn-faster --from git+https://github.com/cheukyin175/learn-faster-kit.git
+    uv tool install learn-faster --from git+https://github.com/privko/learn-faster-kit.git
     ```
 
 2. **Launch in any project directory**
@@ -175,7 +175,7 @@ Each mode provides a tailored coaching experience with mode-specific syllabi and
 
 ```bash
 # Clone the repository
-git clone https://github.com/cheukyin175/learn-faster-kit.git
+git clone https://github.com/privko/learn-faster-kit.git
 cd learn-faster-kit
 
 # Install uv if needed
